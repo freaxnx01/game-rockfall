@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#07070d;}
+a{color:#ffd23f;} a:hover{color:#ffffff;}
+</style>
+</helmet>
+<div style="min-height:100vh;box-sizing:border-box;background:radial-gradient(ellipse at 50% 0%,#0d0f1c 0%,#07070d 60%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:28px 16px;font-family:'Press Start 2P',monospace;">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div style="width:10px;height:10px;background:#3ad6e8;transform:rotate(45deg);"></div>
+    <div style="color:#e8ebf4;font-size:13px;letter-spacing:3px;">ROCKFALL</div>
+    <div style="width:10px;height:10px;background:#3ad6e8;transform:rotate(45deg);"></div>
+  </div>
+  <div style="color:#5b6379;font-size:8px;letter-spacing:2px;">DIG · DODGE · COLLECT · ESCAPE</div>
+  <x-import component-from-global-scope="boulder-game" from="./game.js" crt="{{ crtAttr }}" music="{{ musicAttr }}" unlock-all="{{ unlockAttr }}" style="width:100%;max-width:1180px;" hint-size="100%,640px"></x-import>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:900px;">
+    <span style="border:1px solid #262d42;background:#10131f;color:#aab2c8;font-size:8px;padding:7px 9px;">ARROWS / WASD — MOVE</span>
+    <span style="border:1px solid #262d42;background:#10131f;color:#aab2c8;font-size:8px;padding:7px 9px;">ENTER — START</span>
+    <span style="border:1px solid #262d42;background:#10131f;color:#aab2c8;font-size:8px;padding:7px 9px;">P — PAUSE</span>
+    <span style="border:1px solid #262d42;background:#10131f;color:#aab2c8;font-size:8px;padding:7px 9px;">R — SACRIFICE LIFE</span>
+    <span style="border:1px solid #262d42;background:#10131f;color:#aab2c8;font-size:8px;padding:7px 9px;">M — SOUND</span>
+    <span style="border:1px solid #262d42;background:#10131f;color:#aab2c8;font-size:8px;padding:7px 9px;">ESC — TITLE</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;crt&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;},&quot;music&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Audio&quot;},&quot;unlockAll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Progress&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    return {
+      crtAttr: String(p.crt ?? true),
+      musicAttr: String(p.music ?? true),
+      unlockAttr: String(p.unlockAll ?? false)
+    };
+  }
+}
+</script>
+<!-- ===== VARIANT A — STATIC (normal games) ===== -->
+<script src="./version.js"></script>
+<nav id="game-nav" aria-label="Game navigation" style="position:fixed;right:10px;bottom:8px;z-index:2147483647;display:flex;gap:12px;align-items:center;font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:6px 11px;border-radius:8px;background:rgba(15,17,26,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:.55;transition:opacity .2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">
+  <span id="version-badge" title="Version" style="color:#5a6072"></span>
+  <span style="color:#5a6072" aria-hidden="true">·</span>
+  <a href="https://github.freaxnx01.ch/games/" style="color:#8fd8e8;text-decoration:none">More Games…</a>
+  <span style="color:#5a6072" aria-hidden="true">·</span>
+  <a href="https://github.com/freaxnx01/game-rockfall" target="_blank" rel="noopener" style="color:#8fd8e8;text-decoration:none">Source</a>
+  <span style="color:#5a6072" aria-hidden="true">·</span>
+  <a href="https://github.com/freaxnx01/game-rockfall/issues/new?title=%5BFeedback%5D%20game-rockfall&labels=feedback" target="_blank" rel="noopener" style="color:#8fd8e8;text-decoration:none">Feedback</a>
+  <span style="color:#5a6072" aria-hidden="true">·</span>
+  <a class="github-button" href="https://github.com/freaxnx01/game-rockfall" data-icon="octicon-star" data-size="small" data-show-count="true" aria-label="Star freaxnx01/game-rockfall on GitHub">Star</a>
+</nav>
+<script>
+  // Version badge → CHANGELOG. Text comes only from window.GAME_VERSION so
+  // version.js stays the single source (never hardcode the literal here).
+  (function () {
+    var el = document.getElementById('version-badge');
+    if (!el) return;
+    var a = document.createElement('a');
+    a.href = 'https://github.com/freaxnx01/game-rockfall/blob/main/CHANGELOG.md';
+    a.target = '_blank'; a.rel = 'noopener'; a.title = 'Changelog';
+    a.textContent = 'v' + (window.GAME_VERSION || '0.0.0');
+    a.style.color = 'inherit'; a.style.textDecoration = 'none';
+    el.appendChild(a);
+  })();
+</script>
+<script async defer crossorigin="anonymous" src="https://buttons.github.io/buttons.js"></script>
+
+
+</body>
+</html>
